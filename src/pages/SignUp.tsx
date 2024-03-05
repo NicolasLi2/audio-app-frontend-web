@@ -13,6 +13,7 @@ import {
   Select,
 } from 'antd';
 import { getClient } from '../api/client';
+import catchError from '../api/catchError';
 
 const { Option } = Select;
 
@@ -64,7 +65,8 @@ export default function SignUp() {
       const client = await getClient();
       client.post('/auth/create', values);
     } catch (error) {
-      console.log(error);
+      const errorMessage = catchError(error);
+      console.log(errorMessage);
     }
   };
 

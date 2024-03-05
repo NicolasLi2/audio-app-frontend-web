@@ -6,7 +6,7 @@ const catchError = (error: any): string => {
   if (isAxiosError(error)) {
     const errorResponse = error.response?.data;
     if (errorResponse) {
-      errorMessage = errorResponse.message;
+      errorMessage = errorResponse.error;
     }
   }
   return errorMessage;

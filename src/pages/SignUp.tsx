@@ -1,27 +1,7 @@
-import React, { useState } from 'react';
-import type { CascaderProps } from 'antd';
-import {
-  AutoComplete,
-  Button,
-  Cascader,
-  Checkbox,
-  Col,
-  Form,
-  Input,
-  InputNumber,
-  Row,
-  Select,
-} from 'antd';
-import { getClient } from '../api/client';
+import { Button, Form, Input, message } from 'antd';
 import catchError from '../api/catchError';
+import { getClient } from '../api/client';
 
-const { Option } = Select;
-
-interface DataNodeType {
-  value: string;
-  label: string;
-  children?: DataNodeType[];
-}
 interface NewUser {
   name: string;
   email: string;
@@ -60,13 +40,15 @@ const tailFormItemLayout = {
 export default function SignUp() {
   const [form] = Form.useForm();
 
-  const handleSubmit = async (values: NewUser) => {
+  const onFinish = async (values: NewUser) => {
     try {
       const client = await getClient();
-      client.post('/auth/create', values);
+      const { data } = await client.post('/auth/create', values);
+      console.log(data);
+      // { user: { id: user._id, name, email } }
     } catch (error) {
       const errorMessage = catchError(error);
-      console.log(errorMessage);
+      message.error(errorMessage, 5);
     }
   };
 
@@ -78,7 +60,7 @@ export default function SignUp() {
       labelAlign='left'
       form={form}
       name='register'
-      onFinish={handleSubmit}
+      onFinish={onFinish}
       style={{ maxWidth: 500, margin: '0 auto' }}
       scrollToFirstError
     >
@@ -99,7 +81,7 @@ export default function SignUp() {
 
       <Form.Item
         name='email'
-        label='E-mail'
+        label='Email'
         rules={[
           {
             type: 'email',

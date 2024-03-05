@@ -2,3 +2,29 @@
   max-width: 1200px;
   margin: 0 auto;
 } */
+
+.otp-field {
+  width: 25px;
+  height: 25px;
+  border-radius: 20%;
+  text-align: center;
+  font-size: 14px;
+  font-weight: bold;
+  line-height: 0;
+  /* border-color: #ffe4c9; */
+  border: solid 1px black;
+  margin: 3px;
+}
+
+.otp-btn {
+  width: 100px;
+  height: 40px;
+  border-radius: 5px;
+  background-color: #372ae9;
+  border: none;
+  color: #e6e5f0;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  margin: 10px 0;
+}

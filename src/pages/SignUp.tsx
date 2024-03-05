@@ -85,7 +85,7 @@ export default function SignUp() {
         rules={[
           {
             type: 'email',
-            message: 'The input is not valid E-mail!',
+            message: 'The input is not valid Email!',
           },
           {
             required: true,

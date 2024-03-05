@@ -1,4 +1,4 @@
-import { LockOutlined, MailOutlined } from '@ant-design/icons';
+import { MailOutlined } from '@ant-design/icons';
 import { Button, Form, Input, message } from 'antd';
 import ButtonGroup from 'antd/es/button/button-group';
 import catchError from '../api/catchError';
@@ -33,13 +33,12 @@ const tailFormItemLayout = {
   },
 };
 
-export default function SignIn() {
+export default function LostPassword() {
   const onFinish = async (values: SignInInfo) => {
     try {
       const client = await getClient();
-      const { data } = await client.post('/auth/sign-in', values);
-      localStorage.setItem('access-token', data.token);
-      message.success('Logged in successfully', 3);
+      const { data } = await client.post('/auth/forget-password', values);
+      message.success('Check your email to reset password', 3);
     } catch (error) {
       const errorMessage = catchError(error);
       message.error(errorMessage, 5);
@@ -72,35 +71,18 @@ export default function SignIn() {
           placeholder='Email'
         />
       </Form.Item>
-      <Form.Item
-        name='password'
-        label='Password'
-        rules={[
-          { required: true, message: 'Please input your Password!' },
-          {
-            min: 6,
-            message: 'Password must be at least 6 characters long',
-          },
-        ]}
-      >
-        <Input
-          prefix={<LockOutlined className='site-form-item-icon' />}
-          type='password'
-          placeholder='Password'
-        />
-      </Form.Item>
 
       <Form.Item {...tailFormItemLayout}>
         <Button type='primary' htmlType='submit' className='login-form-button'>
-          Log in
+          Send link
         </Button>
       </Form.Item>
       <Form.Item {...tailFormItemLayout}>
         <ButtonGroup
           style={{ display: 'flex', justifyContent: 'space-between' }}
         >
-          <a href='#'>Forget Password</a>
           <a href='#'>Sign In</a>
+          <a href='#'>Sign Up</a>
         </ButtonGroup>
       </Form.Item>
     </Form>

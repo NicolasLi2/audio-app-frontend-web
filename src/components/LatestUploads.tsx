@@ -20,6 +20,7 @@ export default function LatestUploads({ onClick }: Props) {
               poster={item.poster}
               file={item.file}
               onClick={onClick}
+              item={item}
             />
           );
         })}

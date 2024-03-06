@@ -57,3 +57,53 @@ body {
   cursor: pointer;
   margin: 10px 0;
 }
+
+.play-animation-container {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  width: 13px;
+  height: 20px;
+}
+
+.play-animation-bar {
+  width: 3px;
+  height: 100%;
+  background-color: orange;
+  border-radius: 3px;
+  transform-origin: bottom;
+  /* animation: bounce 1s linear infinite alternate; */
+  animation: bounce 0.7s linear infinite alternate;
+  content: '';
+}
+
+@keyframes bounce {
+  10% {
+    transform: scaleY(1);
+  }
+  25% {
+    transform: scaleY(0.75);
+  }
+  50% {
+    transform: scaleY(0.3);
+  }
+  75% {
+    transform: scaleY(0.75);
+  }
+  100% {
+    transform: scaleY(1);
+  }
+}
+
+.play-animation-bar.n1 {
+  /* animation-delay: -1s; */
+  animation-delay: -0.8s;
+}
+.play-animation-bar.n2 {
+  /* animation-delay: -1.5s; */
+  animation-delay: -1.4s;
+}
+.play-animation-bar.n3 {
+  /* animation-delay: -2.7s; */
+  animation-delay: -2s;
+}

@@ -5,6 +5,7 @@ import useSound from 'use-sound';
 import { RootState } from '../store';
 import { updateOnGoingAudio } from '../store/playerSlice';
 import { AudioData } from '../types/audio';
+import PlayAnimation from './PlayAnimation';
 
 interface Props {
   title: string;
@@ -44,14 +45,17 @@ export default function AudioCard({
   };
 
   return (
-    <Card
-      hoverable
-      style={{ width: 240 }}
-      cover={<img alt={title} src={poster} />}
-      onClick={playingButton}
-      // onClick={handleClick}
-    >
-      <Card.Meta title={title} />
-    </Card>
+    <>
+      <Card
+        hoverable
+        style={{ width: 240 }}
+        cover={<img alt={title} src={poster} />}
+        onClick={playingButton}
+        // onClick={handleClick}
+      >
+        <Card.Meta title={title} />
+      </Card>
+      <PlayAnimation />
+    </>
   );
 }

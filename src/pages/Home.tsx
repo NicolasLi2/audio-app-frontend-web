@@ -6,6 +6,7 @@ import { RootState } from '../store';
 import usePlayer from '../hooks/usePlayer';
 import { useEffect, useState } from 'react';
 import { updateIsPlaying, updateOnGoingAudio } from '../store/playerSlice';
+import PlayAnimation from '../ui/PlayAnimation';
 
 export default function Home() {
   const [file, setFile] = useState('');

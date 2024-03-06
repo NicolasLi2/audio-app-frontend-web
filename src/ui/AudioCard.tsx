@@ -13,6 +13,7 @@ interface Props {
   file: string;
   onClick?: () => void;
   item: AudioData;
+  playing: boolean;
 }
 
 export default function AudioCard({
@@ -21,6 +22,7 @@ export default function AudioCard({
   file,
   onClick,
   item,
+  playing,
 }: Props) {
   const [isPlaying, setIsPlaying] = useState(false);
   const [play, { pause, duration, sound, stop }] = useSound(file, {
@@ -47,6 +49,7 @@ export default function AudioCard({
   return (
     <>
       <Card
+        className='relative'
         hoverable
         style={{ width: 240 }}
         cover={<img alt={title} src={poster} />}
@@ -54,8 +57,8 @@ export default function AudioCard({
         // onClick={handleClick}
       >
         <Card.Meta title={title} />
+        <PlayAnimation visible={playing} />
       </Card>
-      <PlayAnimation />
     </>
   );
 }

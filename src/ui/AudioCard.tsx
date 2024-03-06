@@ -3,14 +3,16 @@ import { Card, Flex, Image } from 'antd';
 interface Props {
   title: string;
   poster?: string;
+  onClick?: () => void;
 }
 
-export default function AudioCard({ title, poster }: Props) {
+export default function AudioCard({ title, poster, onClick }: Props) {
   return (
     <Card
       hoverable
       style={{ width: 240 }}
-      cover={<Image alt={title} src={poster} />}
+      cover={<img alt={title} src={poster} />}
+      onClick={onClick}
     >
       <Card.Meta title={title} />
     </Card>

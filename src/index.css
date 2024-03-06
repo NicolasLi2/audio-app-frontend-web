@@ -1,7 +1,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
+/* 
 :root {
   --white: #ffffff;
   --green: #333d29;
@@ -25,7 +25,7 @@ html {
 body {
   margin: 0;
   padding: 0;
-}
+} */
 
 /* .container {
   max-width: 1200px;

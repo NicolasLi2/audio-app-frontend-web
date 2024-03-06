@@ -10,7 +10,7 @@ export default function LatestUploads() {
   console.log(data);
 
   return (
-    <div>
+    <div className='flex gap-3'>
       {data &&
         data.map((item) => {
           return (

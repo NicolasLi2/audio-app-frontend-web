@@ -9,6 +9,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { Provider } from 'react-redux';
 import store from './store';
+import Upload from './pages/Upload';
 
 const router = createBrowserRouter([
   {
@@ -29,6 +30,10 @@ const router = createBrowserRouter([
       {
         path: '/verify',
         element: <Verification />,
+      },
+      {
+        path: '/upload',
+        element: <Upload />,
       },
     ],
   },

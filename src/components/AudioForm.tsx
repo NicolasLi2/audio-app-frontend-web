@@ -1,6 +1,10 @@
 import { Button, Form, Input, message } from 'antd';
 import catchError from '../api/catchError';
 import { getClient } from '../api/client';
+import AudioSelector from './AudioSelector';
+import TextArea from 'antd/es/input/TextArea';
+import CategorySelector from './CategorySelector';
+import ImageSelector from './ImageSelector';
 
 interface NewUser {
   name: string;
@@ -37,7 +41,7 @@ const tailFormItemLayout = {
   },
 };
 
-export default function SignUp() {
+export default function AudioForm() {
   const [form] = Form.useForm();
 
   const onFinish = async (values: NewUser) => {
@@ -53,7 +57,6 @@ export default function SignUp() {
   };
 
   return (
-    // <div className='container'>
     <Form
       // {...layout}
       {...formItemLayout}
@@ -64,15 +67,20 @@ export default function SignUp() {
       style={{ maxWidth: 500, margin: '0 auto' }}
       scrollToFirstError
     >
+      <Form.Item name='poster' label='Select Poster'>
+        <ImageSelector />
+      </Form.Item>
+      <Form.Item name='audio' label='Select Audio' rules={[{ required: true }]}>
+        <AudioSelector />
+      </Form.Item>
+
       <Form.Item
-        name='name'
-        label='Name'
-        // tooltip='What do you want others to call you?'
+        name='title'
+        label='Title'
         rules={[
           {
             required: true,
-            message: 'Please input your name!',
-            whitespace: true,
+            message: 'Please input audio title!',
           },
         ]}
       >
@@ -80,46 +88,36 @@ export default function SignUp() {
       </Form.Item>
 
       <Form.Item
-        name='email'
-        label='Email'
+        name='category'
+        label='Category'
         rules={[
           {
-            type: 'email',
-            message: 'The input is not valid Email!',
-          },
-          {
             required: true,
-            message: 'Please input your E-mail!',
+            message: 'Please select a category!',
           },
         ]}
       >
-        <Input />
+        <CategorySelector />
       </Form.Item>
 
       <Form.Item
-        name='password'
-        label='Password'
+        name='about'
+        label='About'
         rules={[
           {
             required: true,
-            message: 'Please input your password!',
-          },
-          {
-            min: 6,
-            message: 'Password must be at least 6 characters long',
+            message: 'Please input your audio about!',
           },
         ]}
-        hasFeedback
       >
-        <Input.Password />
+        <TextArea />
       </Form.Item>
 
       <Form.Item {...tailFormItemLayout}>
         <Button type='default' htmlType='submit'>
-          Sign Up
+          Submit
         </Button>
       </Form.Item>
     </Form>
-    // </div>
   );
 }

@@ -91,7 +91,7 @@ export default function SignIn() {
       </Form.Item>
 
       <Form.Item {...tailFormItemLayout}>
-        <Button type='primary' htmlType='submit' className='login-form-button'>
+        <Button type='default' htmlType='submit' className='login-form-button'>
           Log in
         </Button>
       </Form.Item>

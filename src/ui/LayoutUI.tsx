@@ -14,6 +14,7 @@ const items = [
   { icon: VideoCameraOutlined, label: 'Sign up' },
   { icon: UploadOutlined, label: 'Sign in' },
   { icon: UserOutlined, label: 'Verify' },
+  { icon: UploadOutlined, label: 'Upload' },
 ].map((item, index) => ({
   key: String(index + 1),
   icon: React.createElement(item.icon),
@@ -57,6 +58,9 @@ export default function LayoutUI() {
                 break;
               case '4':
                 navigate('/verify');
+                break;
+              case '5':
+                navigate('/upload');
                 break;
             }
           }}

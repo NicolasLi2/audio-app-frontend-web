@@ -11,21 +11,23 @@ import {
   VideoCameraOutlined,
 } from '@ant-design/icons';
 import { Layout, Menu, theme } from 'antd';
+import { useNavigate } from 'react-router-dom';
 
 const { Header, Content, Footer, Sider } = Layout;
 
 const items = [
-  UserOutlined,
-  VideoCameraOutlined,
-  UploadOutlined,
-  UserOutlined,
-].map((icon, index) => ({
+  { icon: UserOutlined, label: 'Home' },
+  { icon: VideoCameraOutlined, label: 'Sign up' },
+  { icon: UploadOutlined, label: 'Sign in' },
+  { icon: UserOutlined, label: 'Verify' },
+].map((item, index) => ({
   key: String(index + 1),
-  icon: React.createElement(icon),
-  label: `nav ${index + 1}`,
+  icon: React.createElement(item.icon),
+  label: item.label,
 }));
 
 export default function Home() {
+  const navigate = useNavigate();
   const {
     token: { colorBgContainer, borderRadiusLG },
   } = theme.useToken();
@@ -46,8 +48,24 @@ export default function Home() {
         <Menu
           theme='dark'
           mode='inline'
-          defaultSelectedKeys={['4']}
+          defaultSelectedKeys={['1']}
           items={items}
+          onClick={(item) => {
+            switch (item.key) {
+              case '1':
+                navigate('/');
+                break;
+              case '2':
+                navigate('/signup');
+                break;
+              case '3':
+                navigate('/signin');
+                break;
+              case '4':
+                navigate('/verify');
+                break;
+            }
+          }}
         />
       </Sider>
       <Layout>

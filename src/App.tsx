@@ -1,36 +1,33 @@
-import { Outlet, RouterProvider, createBrowserRouter } from 'react-router-dom';
+import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import './App.css';
-import Verification from './pages/Verification';
 import Home from './pages/Home';
-import SignUp from './pages/SignUp';
 import SignIn from './pages/SignIn';
-import Header from './ui/Header';
+import SignUp from './pages/SignUp';
+import Verification from './pages/Verification';
 // import { Footer } from 'antd/es/layout/layout';
-import Footer from './ui/Footer';
-
-// const Layout = () => {
-//   return (
-//     <>
-//       <Header />
-//       <Outlet />
-//       <Footer />
-//     </>
-//   );
-// };
+import LayoutUI from './ui/LayoutUI';
 
 const router = createBrowserRouter([
-  { path: '/', element: <Home /> },
   {
-    path: '/signup',
-    element: <SignUp />,
-  },
-  {
-    path: '/signin',
-    element: <SignIn />,
-  },
-  {
-    path: '/verify',
-    element: <Verification />,
+    element: <LayoutUI />,
+    children: [
+      {
+        path: '/',
+        element: <Home />,
+      },
+      {
+        path: '/signup',
+        element: <SignUp />,
+      },
+      {
+        path: '/signin',
+        element: <SignIn />,
+      },
+      {
+        path: '/verify',
+        element: <Verification />,
+      },
+    ],
   },
 ]);
 

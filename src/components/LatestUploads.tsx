@@ -18,6 +18,7 @@ export default function LatestUploads({ onClick }: Props) {
               key={item.id}
               title={item.title}
               poster={item.poster}
+              file={item.file}
               onClick={onClick}
             />
           );

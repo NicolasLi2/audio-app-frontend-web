@@ -7,6 +7,7 @@ import usePlayer from '../hooks/usePlayer';
 import { useEffect, useState } from 'react';
 import { updateIsPlaying, updateOnGoingAudio } from '../store/playerSlice';
 import PlayAnimation from '../ui/PlayAnimation';
+import RecommendedAudios from '../components/RecommendedAudios';
 
 export default function Home() {
   const [file, setFile] = useState('');
@@ -41,9 +42,15 @@ export default function Home() {
 
   return (
     <div>
-      <h2>Latest Uploads</h2>
+      <div>
+        <h2>Latest Uploads</h2>
+        <LatestUploads />
+      </div>
 
-      <LatestUploads />
+      <div>
+        <h2>Recommended</h2>
+        <RecommendedAudios />
+      </div>
     </div>
   );
 }

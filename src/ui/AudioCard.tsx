@@ -8,24 +8,14 @@ import { AudioData } from '../types/audio';
 import PlayAnimation from './PlayAnimation';
 
 interface Props {
-  title: string;
-  poster?: string;
-  file: string;
   onClick?: () => void;
   item: AudioData;
   playing: boolean;
 }
 
-export default function AudioCard({
-  title,
-  poster,
-  file,
-  onClick,
-  item,
-  playing,
-}: Props) {
+export default function AudioCard({ onClick, item, playing }: Props) {
   const [isPlaying, setIsPlaying] = useState(false);
-  const [play, { pause, duration, sound, stop }] = useSound(file, {
+  const [play, { pause, duration, sound, stop }] = useSound(item.file, {
     interrupt: true,
   });
   const dispatch = useDispatch();
@@ -52,11 +42,11 @@ export default function AudioCard({
         className='relative'
         hoverable
         style={{ width: 240 }}
-        cover={<img alt={title} src={poster} />}
+        cover={<img alt={item.title} src={item.poster} />}
         onClick={playingButton}
         // onClick={handleClick}
       >
-        <Card.Meta title={title} />
+        <Card.Meta title={item.title} />
         <PlayAnimation visible={playing} />
       </Card>
     </>

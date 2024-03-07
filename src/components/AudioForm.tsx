@@ -5,7 +5,7 @@ import AudioSelector from './AudioSelector';
 import TextArea from 'antd/es/input/TextArea';
 import CategorySelector from './CategorySelector';
 import ImageSelector from './ImageSelector';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 const formItemLayout = {
   labelCol: {
@@ -51,9 +51,15 @@ interface Props {
   onSubmit: (formData: FormData) => void;
   busy: boolean;
   progress: number;
+  isSuccess: boolean;
 }
 
-export default function AudioForm({ onSubmit, busy, progress }: Props) {
+export default function AudioForm({
+  onSubmit,
+  busy,
+  progress,
+  isSuccess,
+}: Props) {
   const [form] = Form.useForm();
   const [audioInfo, setAudioInfo] = useState({ ...defaultForm });
 
@@ -69,6 +75,13 @@ export default function AudioForm({ onSubmit, busy, progress }: Props) {
     console.log(audioInfo);
     onSubmit(formData);
   };
+
+  useEffect(() => {
+    if (isSuccess) {
+      setAudioInfo({ ...defaultForm });
+      form.resetFields();
+    }
+  }, [isSuccess]);
 
   console.log(audioInfo);
 
@@ -117,6 +130,7 @@ export default function AudioForm({ onSubmit, busy, progress }: Props) {
         ]}
       >
         <Input
+          value={audioInfo.title}
           onChange={(e) =>
             setAudioInfo({ ...audioInfo, title: e.target.value })
           }
@@ -158,7 +172,7 @@ export default function AudioForm({ onSubmit, busy, progress }: Props) {
       </Form.Item>
 
       <Form.Item {...tailFormItemLayout}>
-        <Button type='default' htmlType='submit'>
+        <Button type='default' htmlType='submit' disabled={busy} loading={busy}>
           Submit
         </Button>
       </Form.Item>

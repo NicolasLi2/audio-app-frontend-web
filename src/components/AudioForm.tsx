@@ -5,12 +5,7 @@ import AudioSelector from './AudioSelector';
 import TextArea from 'antd/es/input/TextArea';
 import CategorySelector from './CategorySelector';
 import ImageSelector from './ImageSelector';
-
-interface NewUser {
-  name: string;
-  email: string;
-  password: string;
-}
+import { useState } from 'react';
 
 const formItemLayout = {
   labelCol: {
@@ -22,11 +17,6 @@ const formItemLayout = {
     sm: { span: 16 },
   },
 };
-
-// const layout = {
-//   labelCol: { span: 8 },
-//   wrapperCol: { span: 8 },
-// };
 
 const tailFormItemLayout = {
   wrapperCol: {
@@ -41,37 +31,79 @@ const tailFormItemLayout = {
   },
 };
 
-export default function AudioForm() {
-  const [form] = Form.useForm();
+interface FormFields {
+  title: string;
+  category: string;
+  about: string;
+  file?: File;
+  poster?: File;
+}
 
-  const onFinish = async (values: NewUser) => {
-    try {
-      const client = await getClient();
-      const { data } = await client.post('/auth/create', values);
-      console.log(data);
-      // { user: { id: user._id, name, email } }
-    } catch (error) {
-      const errorMessage = catchError(error);
-      message.error(errorMessage, 5);
-    }
+const defaultForm: FormFields = {
+  title: '',
+  category: '',
+  about: '',
+  file: undefined,
+  poster: undefined,
+};
+
+interface Props {
+  onSubmit: (formData: FormData) => void;
+  busy: boolean;
+  progress: number;
+}
+
+export default function AudioForm({ onSubmit, busy, progress }: Props) {
+  const [form] = Form.useForm();
+  const [audioInfo, setAudioInfo] = useState({ ...defaultForm });
+
+  const handleSubmit = () => {
+    const formData = new FormData();
+
+    formData.append('title', audioInfo.title);
+    formData.append('category', audioInfo.category);
+    formData.append('about', audioInfo.about);
+    formData.append('file', audioInfo.file as Blob);
+    formData.append('poster', audioInfo.poster as Blob);
+
+    console.log(audioInfo);
+    onSubmit(formData);
   };
+
+  console.log(audioInfo);
 
   return (
     <Form
       // {...layout}
       {...formItemLayout}
       labelAlign='left'
+      fields={Object.entries(audioInfo).map(([name, value]) => ({
+        name,
+        value,
+      }))}
       form={form}
-      name='register'
-      onFinish={onFinish}
+      name='upload'
+      onFinish={handleSubmit}
       style={{ maxWidth: 500, margin: '0 auto' }}
       scrollToFirstError
     >
       <Form.Item name='poster' label='Select Poster'>
-        <ImageSelector />
+        <ImageSelector
+          onSelect={(file) => {
+            setAudioInfo({ ...audioInfo, poster: file });
+          }}
+        />
       </Form.Item>
-      <Form.Item name='audio' label='Select Audio' rules={[{ required: true }]}>
-        <AudioSelector />
+      <Form.Item
+        name='file'
+        label='Select Audio'
+        rules={[{ required: true, message: 'Please select audio file!' }]}
+      >
+        <AudioSelector
+          onSelect={(file) => {
+            setAudioInfo({ ...audioInfo, file: file });
+          }}
+        />
       </Form.Item>
 
       <Form.Item
@@ -84,7 +116,11 @@ export default function AudioForm() {
           },
         ]}
       >
-        <Input />
+        <Input
+          onChange={(e) =>
+            setAudioInfo({ ...audioInfo, title: e.target.value })
+          }
+        />
       </Form.Item>
 
       <Form.Item
@@ -97,7 +133,11 @@ export default function AudioForm() {
           },
         ]}
       >
-        <CategorySelector />
+        <CategorySelector
+          onSelect={(value) => {
+            setAudioInfo({ ...audioInfo, category: value });
+          }}
+        />
       </Form.Item>
 
       <Form.Item
@@ -110,7 +150,11 @@ export default function AudioForm() {
           },
         ]}
       >
-        <TextArea />
+        <TextArea
+          onChange={(e) =>
+            setAudioInfo({ ...audioInfo, about: e.target.value })
+          }
+        />
       </Form.Item>
 
       <Form.Item {...tailFormItemLayout}>

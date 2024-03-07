@@ -33,16 +33,21 @@ body {
 } */
 
 .otp-field {
-  width: 25px;
-  height: 25px;
+  width: 35px;
+  height: 35px;
   border-radius: 20%;
   text-align: center;
   font-size: 14px;
   font-weight: bold;
   line-height: 0;
   /* border-color: #ffe4c9; */
-  border: solid 1px black;
+  border: solid 1px #ccc;
   margin: 3px;
+  outline: none;
+}
+
+.otp-field:focus {
+  border-color: #776ee9;
 }
 
 .otp-btn {

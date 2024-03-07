@@ -1,4 +1,4 @@
-import { message } from 'antd';
+import { Button, Form, message } from 'antd';
 import { FormEvent, useEffect, useRef, useState } from 'react';
 import { getClient } from '../api/client';
 
@@ -51,8 +51,8 @@ export default function Verification() {
   }, [activeOtpIndex]);
 
   return (
-    <form onSubmit={onSubmit}>
-      <div>
+    <form className='flex flex-col justify-items-center'>
+      <div className='mb-6 m-auto'>
         {otpFields.map((_, index) => {
           return (
             <input
@@ -67,9 +67,11 @@ export default function Verification() {
         })}
       </div>
 
-      <button className='otp-btn' type='submit'>
-        Submit
-      </button>
+      <div className='m-auto'>
+        <Button type='default' onClick={onSubmit}>
+          Submit
+        </Button>
+      </div>
     </form>
   );
 }

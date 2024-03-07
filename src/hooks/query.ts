@@ -2,7 +2,7 @@ import { useQuery } from '@tanstack/react-query';
 import { getClient } from '../api/client';
 import catchError from '../api/catchError';
 import { message } from 'antd';
-import { AudioData } from '../types/audio';
+import { AudioData, Playlist } from '../types/audio';
 
 const fetchLatestAudios = async (): Promise<AudioData[]> => {
   const client = await getClient();
@@ -50,6 +50,24 @@ export const useFetchUploadsByProfile = () => {
   const { data, isError, error, isLoading, isFetching } = useQuery({
     queryKey: ['uploads-by-profile'],
     queryFn: fetchUploadsByProfile,
+  });
+  if (isError) {
+    const errorMessage = catchError(error);
+    message.error(errorMessage);
+  }
+  return { data, isLoading, isFetching };
+};
+
+const fetchPlaylist = async (): Promise<Playlist[]> => {
+  const client = await getClient();
+  const { data } = await client.get('/playlist/by-profile');
+  return data.playlist;
+};
+
+export const useFetchPlaylist = () => {
+  const { data, isError, error, isLoading, isFetching } = useQuery({
+    queryKey: ['playlist'],
+    queryFn: fetchPlaylist,
   });
   if (isError) {
     const errorMessage = catchError(error);

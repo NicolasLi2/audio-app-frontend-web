@@ -33,3 +33,10 @@ export interface AudioData {
     name: string;
   };
 }
+
+export interface Playlist {
+  id: string;
+  title: string;
+  itemsCount: number;
+  visibility: 'public' | 'private';
+}

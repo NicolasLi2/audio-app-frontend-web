@@ -1,3 +1,4 @@
+import PlaylistTab from '../components/PlaylistTab';
 import UploadsTab from '../components/UploadsTab';
 
 interface Props {}
@@ -14,7 +15,9 @@ export default function Profile({}: Props) {
 
       <div>
         <h2 className='uppercase ml-4 text-lg font-bold'>Playlists</h2>
-        <div className='bg-blue-300 h-72 overflow-scroll'>Playlists</div>
+        <div className='h-72 overflow-scroll'>
+          <PlaylistTab />
+        </div>
       </div>
       <div>
         <h2 className='uppercase ml-4 text-lg font-bold'>Favorites</h2>

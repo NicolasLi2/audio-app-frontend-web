@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
-import { getClient } from '../api/client';
-import catchError from '../api/catchError';
 import { message } from 'antd';
+import catchError from '../api/catchError';
+import { getClient } from '../api/client';
 import { AudioData, History, Playlist } from '../types/audio';
 
 const fetchLatestAudios = async (): Promise<AudioData[]> => {

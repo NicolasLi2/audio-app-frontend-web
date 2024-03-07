@@ -1,11 +1,15 @@
 import { LockOutlined, MailOutlined } from '@ant-design/icons';
 import { Button, Form, Input, message } from 'antd';
 import ButtonGroup from 'antd/es/button/button-group';
+import { AxiosResponse } from 'axios';
+import { useDispatch } from 'react-redux';
+import { Link } from 'react-router-dom';
 import catchError from '../api/catchError';
 import { getClient } from '../api/client';
-import { Link } from 'react-router-dom';
+import { updateProfile } from '../store/userSlice';
+import { SignInReturnType } from '../types/user';
 
-interface SignInInfo {
+export interface SignInInfo {
   email: string;
   password: string;
 }
@@ -35,11 +39,17 @@ const tailFormItemLayout = {
 };
 
 export default function SignIn() {
+  const dispatch = useDispatch();
+
   const onFinish = async (values: SignInInfo) => {
     try {
       const client = await getClient();
-      const { data } = await client.post('/auth/sign-in', values);
+      const { data }: AxiosResponse<SignInReturnType> = await client.post(
+        '/auth/sign-in',
+        values
+      );
       localStorage.setItem('access-token', data.token);
+      dispatch(updateProfile(data.profile));
       message.success('Logged in successfully', 3);
     } catch (error) {
       const errorMessage = catchError(error);

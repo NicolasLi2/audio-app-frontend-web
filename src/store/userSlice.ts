@@ -7,7 +7,7 @@ export interface Profile {
   avatar?: string;
   verified: boolean;
   followers: number;
-  following: number;
+  followings: number;
 }
 
 interface AuthState {

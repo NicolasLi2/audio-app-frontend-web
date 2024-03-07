@@ -7,7 +7,10 @@ export default function FavoriteTab() {
       {data &&
         data.map((item) => {
           return (
-            <div className='flex m-4 bg-gray-50 rounded-md overflow-hidden'>
+            <div
+              key={item.id}
+              className='flex m-4 bg-gray-50 rounded-md overflow-hidden'
+            >
               <img
                 src={item.poster}
                 alt={item.title}

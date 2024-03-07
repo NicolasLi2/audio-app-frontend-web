@@ -2,13 +2,16 @@ import { useFetchUploadsByProfile } from '../hooks/query';
 
 export default function UploadsTab() {
   const { data } = useFetchUploadsByProfile();
-  console.log(data);
+  // console.log(data);
   return (
     <div className=''>
       {data &&
         data.map((item) => {
           return (
-            <div className='flex m-4 bg-gray-50 rounded-md overflow-hidden'>
+            <div
+              key={item.id}
+              className='flex m-4 bg-gray-50 rounded-md overflow-hidden'
+            >
               <img
                 src={item.poster}
                 alt={item.title}

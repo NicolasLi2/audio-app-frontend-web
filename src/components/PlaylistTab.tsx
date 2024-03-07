@@ -5,13 +5,16 @@ import { useFetchPlaylist } from '../hooks/query';
 
 export default function PlaylistTab() {
   const { data } = useFetchPlaylist();
-  console.log(data);
+  // console.log(data);
   return (
     <div className=''>
       {data &&
         data.map((item) => {
           return (
-            <div className='flex m-4 bg-gray-50 rounded-md overflow-hidden'>
+            <div
+              key={item.id}
+              className='flex m-4 bg-gray-50 rounded-md overflow-hidden'
+            >
               <div className='flex items-center justify-center w-10 text-blue-500 '>
                 <RiPlayListFill size={25} />
               </div>

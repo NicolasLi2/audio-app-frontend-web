@@ -19,17 +19,19 @@ export default function Profile() {
         </div>
 
         <div>
-          <h2 className='uppercase ml-4 text-lg font-bold'>Playlists</h2>
-          <div className='h-72 overflow-scroll'>
-            <PlaylistTab />
-          </div>
-        </div>
-        <div>
           <h2 className='uppercase ml-4 text-lg font-bold'>Favorites</h2>
           <div className=' h-72 overflow-scroll'>
             <FavoriteTab />
           </div>
         </div>
+
+        <div>
+          <h2 className='uppercase ml-4 text-lg font-bold'>Playlists</h2>
+          <div className='h-72 overflow-scroll'>
+            <PlaylistTab />
+          </div>
+        </div>
+
         <div>
           <h2 className='uppercase ml-4 text-lg font-bold'>Histories</h2>
           <div className=' h-72 overflow-scroll'>

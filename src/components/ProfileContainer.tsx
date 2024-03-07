@@ -1,10 +1,10 @@
-import { useSelector } from 'react-redux';
-import { VscVerifiedFilled, VscUnverified } from 'react-icons/vsc';
 import { Avatar } from 'antd';
-import { RootState } from '../store';
+import { VscUnverified, VscVerifiedFilled } from 'react-icons/vsc';
 
 export default function ProfileContainer() {
-  const { profile } = useSelector((state: RootState) => state.user);
+  // const { profile } = useSelector((state: RootState) => state.user);
+  const profileString = localStorage.getItem('user-profile');
+  const profile = profileString ? JSON.parse(profileString) : null;
   console.log(profile);
   if (!profile) return null;
   return (

@@ -49,6 +49,7 @@ export default function SignIn() {
         values
       );
       localStorage.setItem('access-token', data.token);
+      localStorage.setItem('user-profile', JSON.stringify(data.profile));
       dispatch(updateProfile(data.profile));
       message.success('Logged in successfully', 3);
     } catch (error) {

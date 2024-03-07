@@ -3,6 +3,7 @@ import { Button, Form, Input, message } from 'antd';
 import ButtonGroup from 'antd/es/button/button-group';
 import catchError from '../api/catchError';
 import { getClient } from '../api/client';
+import { Link } from 'react-router-dom';
 
 interface SignInInfo {
   email: string;
@@ -99,8 +100,8 @@ export default function SignIn() {
         <ButtonGroup
           style={{ display: 'flex', justifyContent: 'space-between' }}
         >
-          <a href='#'>Forget Password</a>
-          <a href='#'>Sign In</a>
+          <Link to='/lost-password'>Forget Password</Link>
+          <Link to='/signup'>Sign Up</Link>
         </ButtonGroup>
       </Form.Item>
     </Form>

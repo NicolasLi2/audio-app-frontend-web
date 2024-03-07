@@ -3,6 +3,7 @@ import { Button, Form, Input, message } from 'antd';
 import ButtonGroup from 'antd/es/button/button-group';
 import catchError from '../api/catchError';
 import { getClient } from '../api/client';
+import { Link } from 'react-router-dom';
 
 interface SignInInfo {
   email: string;
@@ -73,7 +74,7 @@ export default function LostPassword() {
       </Form.Item>
 
       <Form.Item {...tailFormItemLayout}>
-        <Button type='primary' htmlType='submit' className='login-form-button'>
+        <Button type='default' htmlType='submit' className='login-form-button'>
           Send link
         </Button>
       </Form.Item>
@@ -81,8 +82,8 @@ export default function LostPassword() {
         <ButtonGroup
           style={{ display: 'flex', justifyContent: 'space-between' }}
         >
-          <a href='#'>Sign In</a>
-          <a href='#'>Sign Up</a>
+          <Link to='/signin'>Sign In</Link>
+          <Link to='/signup'>Sign Up</Link>
         </ButtonGroup>
       </Form.Item>
     </Form>

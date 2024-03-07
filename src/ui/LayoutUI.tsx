@@ -3,6 +3,8 @@ import {
   UploadOutlined,
   UserOutlined,
   VideoCameraOutlined,
+  LockOutlined,
+  ProfileOutlined,
 } from '@ant-design/icons';
 import { Layout, Menu, theme } from 'antd';
 import { Outlet, useNavigate } from 'react-router-dom';
@@ -15,6 +17,8 @@ const items = [
   { icon: UploadOutlined, label: 'Sign in' },
   { icon: UserOutlined, label: 'Verify' },
   { icon: UploadOutlined, label: 'Upload' },
+  { icon: LockOutlined, label: 'Lost Password' },
+  { icon: ProfileOutlined, label: 'Profile' },
 ].map((item, index) => ({
   key: String(index + 1),
   icon: React.createElement(item.icon),
@@ -61,6 +65,12 @@ export default function LayoutUI() {
                 break;
               case '5':
                 navigate('/upload');
+                break;
+              case '6':
+                navigate('/lost-password');
+                break;
+              case '7':
+                navigate('/profile');
                 break;
             }
           }}

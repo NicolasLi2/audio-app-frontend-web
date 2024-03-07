@@ -39,3 +39,21 @@ export const useFetchRecommended = () => {
   }
   return { data, isLoading, isFetching };
 };
+
+const fetchUploadsByProfile = async (): Promise<AudioData[]> => {
+  const client = await getClient();
+  const { data } = await client.get('/profile/uploads');
+  return data.audios;
+};
+
+export const useFetchUploadsByProfile = () => {
+  const { data, isError, error, isLoading, isFetching } = useQuery({
+    queryKey: ['uploads-by-profile'],
+    queryFn: fetchUploadsByProfile,
+  });
+  if (isError) {
+    const errorMessage = catchError(error);
+    message.error(errorMessage);
+  }
+  return { data, isLoading, isFetching };
+};

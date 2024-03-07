@@ -10,6 +10,8 @@ import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { Provider } from 'react-redux';
 import store from './store';
 import Upload from './pages/Upload';
+import LostPassword from './pages/LostPassword';
+import Profile from './pages/Profile';
 
 const router = createBrowserRouter([
   {
@@ -24,6 +26,10 @@ const router = createBrowserRouter([
         element: <SignUp />,
       },
       {
+        path: '/lost-password',
+        element: <LostPassword />,
+      },
+      {
         path: '/signin',
         element: <SignIn />,
       },
@@ -34,6 +40,10 @@ const router = createBrowserRouter([
       {
         path: '/upload',
         element: <Upload />,
+      },
+      {
+        path: '/profile',
+        element: <Profile />,
       },
     ],
   },

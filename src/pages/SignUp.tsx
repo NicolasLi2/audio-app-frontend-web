@@ -1,6 +1,8 @@
 import { Button, Form, Input, message } from 'antd';
 import catchError from '../api/catchError';
 import { getClient } from '../api/client';
+import ButtonGroup from 'antd/es/button/button-group';
+import { Link } from 'react-router-dom';
 
 interface NewUser {
   name: string;
@@ -118,6 +120,14 @@ export default function SignUp() {
         <Button type='default' htmlType='submit'>
           Sign Up
         </Button>
+      </Form.Item>
+      <Form.Item {...tailFormItemLayout}>
+        <ButtonGroup
+          style={{ display: 'flex', justifyContent: 'space-between' }}
+        >
+          <Link to='/lost-password'>Forget Password</Link>
+          <Link to='/signin'>Sign In</Link>
+        </ButtonGroup>
       </Form.Item>
     </Form>
     // </div>

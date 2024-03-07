@@ -1,11 +1,9 @@
-import { Button, Form, Input, message } from 'antd';
-import catchError from '../api/catchError';
-import { getClient } from '../api/client';
-import AudioSelector from './AudioSelector';
+import { Button, Form, Input } from 'antd';
 import TextArea from 'antd/es/input/TextArea';
+import { useEffect, useState } from 'react';
+import AudioSelector from './AudioSelector';
 import CategorySelector from './CategorySelector';
 import ImageSelector from './ImageSelector';
-import { useEffect, useState } from 'react';
 
 const formItemLayout = {
   labelCol: {
@@ -50,16 +48,11 @@ const defaultForm: FormFields = {
 interface Props {
   onSubmit: (formData: FormData) => void;
   busy: boolean;
-  progress: number;
+  progress?: number;
   isSuccess: boolean;
 }
 
-export default function AudioForm({
-  onSubmit,
-  busy,
-  progress,
-  isSuccess,
-}: Props) {
+export default function AudioForm({ onSubmit, busy, isSuccess }: Props) {
   const [form] = Form.useForm();
   const [audioInfo, setAudioInfo] = useState({ ...defaultForm });
 

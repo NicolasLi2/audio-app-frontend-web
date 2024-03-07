@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
-import { LoadingOutlined, PlusOutlined } from '@ant-design/icons';
-import { message, Upload } from 'antd';
+import { PlusOutlined } from '@ant-design/icons';
 import type { GetProp, UploadProps } from 'antd';
+import { Upload, message } from 'antd';
+import { useState } from 'react';
 
 interface Props {
   onSelect: (file: FileType) => void;
@@ -16,19 +16,17 @@ const getBase64 = (img: FileType, callback: (url: string) => void) => {
 };
 
 export default function FileSelector({ onSelect }: Props) {
-  const [loading, setLoading] = useState(false);
-  // const [imageUrl, setImageUrl] = useState<string>();
   const [selected, setSelected] = useState(false);
 
   const handleChange: UploadProps['onChange'] = (info) => {
-    getBase64(info.file.originFileObj as FileType, (url) => {
+    getBase64(info.file.originFileObj as FileType, () => {
       setSelected(true);
     });
   };
 
   const uploadButton = (
     <button style={{ border: 0, background: 'none' }} type='button'>
-      {loading ? <LoadingOutlined /> : <PlusOutlined />}
+      <PlusOutlined />
       <div style={{ marginTop: 8 }}>Upload</div>
     </button>
   );
@@ -52,16 +50,12 @@ export default function FileSelector({ onSelect }: Props) {
         name='audio'
         listType='picture-card'
         className='audio-uploader'
-        // fileList={}
         accept='audio/*'
         showUploadList={false}
-        // action='https://run.mocky.io/v3/435e224c-44fb-4773-9faf-380c5e6a2188'
         beforeUpload={beforeUpload}
         onChange={handleChange}
-        // customRequest={}
       >
         {selected ? (
-          // <img src={imageUrl} alt='audio' style={{ width: '100%' }} />
           <img
             src={'public/music.png'}
             alt='audio'

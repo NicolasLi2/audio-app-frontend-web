@@ -1,4 +1,4 @@
-import { Button, Form, message } from 'antd';
+import { Button, message } from 'antd';
 import { FormEvent, useEffect, useRef, useState } from 'react';
 import { getClient } from '../api/client';
 
@@ -42,7 +42,7 @@ export default function Verification() {
     if (!isValid) return message.error('Invalid OTP', 3);
 
     const client = await getClient();
-    const { data } = await client.post('/auth/verify-email', {});
+    await client.post('/auth/verify-email', {});
     console.log(otp.join(''));
   };
 

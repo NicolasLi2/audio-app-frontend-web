@@ -38,7 +38,7 @@ export default function LostPassword() {
   const onFinish = async (values: SignInInfo) => {
     try {
       const client = await getClient();
-      const { data } = await client.post('/auth/forget-password', values);
+      await client.post('/auth/forget-password', values);
       message.success('Check your email to reset password', 3);
     } catch (error) {
       const errorMessage = catchError(error);

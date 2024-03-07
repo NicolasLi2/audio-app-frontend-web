@@ -1,12 +1,15 @@
-import React, { useEffect, useState } from 'react';
 import { Select } from 'antd';
+import { useEffect, useState } from 'react';
 import { categories } from '../types/audio';
 
-// const OPTIONS = ['Apples', 'Nails', 'Bananas', 'Helicopters'];
 const OPTIONS = categories;
 
-export default function CategorySelector({ onSelect }) {
-  const [selectedItems, setSelectedItems] = useState<string[]>([]);
+interface Props {
+  onSelect: (category: string) => void;
+}
+
+export default function CategorySelector({ onSelect }: Props) {
+  const [selectedItems, setSelectedItems] = useState<string>('');
 
   const filteredOptions = OPTIONS.filter((o) => !selectedItems.includes(o));
 

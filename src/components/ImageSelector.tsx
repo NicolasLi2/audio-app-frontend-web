@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
-import { LoadingOutlined, PlusOutlined } from '@ant-design/icons';
-import { message, Upload } from 'antd';
+import { PlusOutlined } from '@ant-design/icons';
 import type { GetProp, UploadProps } from 'antd';
+import { Upload, message } from 'antd';
+import { useState } from 'react';
 
 type FileType = Parameters<GetProp<UploadProps, 'beforeUpload'>>[0];
 
@@ -16,7 +16,6 @@ const getBase64 = (img: FileType, callback: (url: string) => void) => {
 };
 
 export default function ImageSelector({ onSelect }: Props) {
-  const [loading, setLoading] = useState(false);
   const [imageUrl, setImageUrl] = useState<string>();
 
   const handleChange: UploadProps['onChange'] = (info) => {
@@ -42,7 +41,7 @@ export default function ImageSelector({ onSelect }: Props) {
 
   const uploadButton = (
     <button style={{ border: 0, background: 'none' }} type='button'>
-      {loading ? <LoadingOutlined /> : <PlusOutlined />}
+      <PlusOutlined />
       <div style={{ marginTop: 8 }}>Upload</div>
     </button>
   );

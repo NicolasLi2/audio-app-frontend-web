@@ -75,3 +75,21 @@ export const useFetchPlaylist = () => {
   }
   return { data, isLoading, isFetching };
 };
+
+const fetchFavorite = async (): Promise<AudioData[]> => {
+  const client = await getClient();
+  const { data } = await client.get('/favorite');
+  return data.audios;
+};
+
+export const useFetchFavorite = () => {
+  const { data, isError, error, isLoading, isFetching } = useQuery({
+    queryKey: ['favorite'],
+    queryFn: fetchFavorite,
+  });
+  if (isError) {
+    const errorMessage = catchError(error);
+    message.error(errorMessage);
+  }
+  return { data, isLoading, isFetching };
+};

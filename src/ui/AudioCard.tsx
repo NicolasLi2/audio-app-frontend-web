@@ -13,9 +13,9 @@ interface Props {
   playing: boolean;
 }
 
-export default function AudioCard({ onClick, item, playing }: Props) {
+export default function AudioCard({ item, playing }: Props) {
   const [isPlaying, setIsPlaying] = useState(false);
-  const [play, { pause, duration, sound, stop }] = useSound(item.file, {
+  const [play, { pause, stop }] = useSound(item.file, {
     interrupt: true,
   });
   const dispatch = useDispatch();

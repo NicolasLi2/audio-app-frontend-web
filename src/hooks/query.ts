@@ -2,7 +2,7 @@ import { useQuery } from '@tanstack/react-query';
 import { getClient } from '../api/client';
 import catchError from '../api/catchError';
 import { message } from 'antd';
-import { AudioData, Playlist } from '../types/audio';
+import { AudioData, History, Playlist } from '../types/audio';
 
 const fetchLatestAudios = async (): Promise<AudioData[]> => {
   const client = await getClient();
@@ -86,6 +86,24 @@ export const useFetchFavorite = () => {
   const { data, isError, error, isLoading, isFetching } = useQuery({
     queryKey: ['favorite'],
     queryFn: fetchFavorite,
+  });
+  if (isError) {
+    const errorMessage = catchError(error);
+    message.error(errorMessage);
+  }
+  return { data, isLoading, isFetching };
+};
+
+const fetchHistories = async (): Promise<History[]> => {
+  const client = await getClient();
+  const { data } = await client.get('/history');
+  return data.histories;
+};
+
+export const useFetchHistories = () => {
+  const { data, isError, error, isLoading, isFetching } = useQuery({
+    queryKey: ['histories'],
+    queryFn: fetchHistories,
   });
   if (isError) {
     const errorMessage = catchError(error);

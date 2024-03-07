@@ -16,7 +16,7 @@ export default function UploadsTab() {
               />
               <div className='flex flex-col justify-center ml-4'>
                 <div className='text-blue-500 font-bold'>{item.title}</div>
-                <div className='text-blue-400 '>{item.owner.name}</div>
+                <div className='text-gray-500 '>{item.owner.name}</div>
               </div>
             </div>
           );

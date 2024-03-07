@@ -17,7 +17,7 @@ export default function PlaylistTab() {
               </div>
               <div className='flex flex-col justify-center ml-2'>
                 <div className='text-blue-500 font-bold'>{item.title}</div>
-                <div className='text-blue-400 flex items-center gap-3'>
+                <div className='text-gray-500 flex items-center gap-3'>
                   {item.visibility === 'public' ? (
                     <IoMdGlobe />
                   ) : (

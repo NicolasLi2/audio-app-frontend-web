@@ -1,4 +1,5 @@
 import FavoriteTab from '../components/FavoriteTab';
+import HistoryTab from '../components/HistoryTab';
 import PlaylistTab from '../components/PlaylistTab';
 import UploadsTab from '../components/UploadsTab';
 
@@ -26,7 +27,9 @@ export default function Profile() {
       </div>
       <div>
         <h2 className='uppercase ml-4 text-lg font-bold'>Histories</h2>
-        <div className=' h-72 overflow-scroll'>Histories</div>
+        <div className=' h-72 overflow-scroll'>
+          <HistoryTab />
+        </div>
       </div>
     </div>
   );

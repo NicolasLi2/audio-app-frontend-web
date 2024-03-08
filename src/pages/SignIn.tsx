@@ -7,7 +7,7 @@ import { Link } from 'react-router-dom';
 import catchError from '../api/catchError';
 import { getClient } from '../api/client';
 import { updateProfile } from '../store/userSlice';
-import { SignInReturnType } from '../types/user';
+import { Keys, SignInReturnType } from '../types/user';
 
 export interface SignInInfo {
   email: string;
@@ -48,8 +48,8 @@ export default function SignIn() {
         '/auth/sign-in',
         values
       );
-      localStorage.setItem('access-token', data.token);
-      localStorage.setItem('user-profile', JSON.stringify(data.profile));
+      localStorage.setItem(Keys.ACCESS_TOKEN, data.token);
+      localStorage.setItem(Keys.USER_PROFILE, JSON.stringify(data.profile));
       dispatch(updateProfile(data.profile));
       message.success('Logged in successfully', 3);
     } catch (error) {

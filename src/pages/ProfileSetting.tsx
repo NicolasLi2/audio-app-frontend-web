@@ -6,12 +6,13 @@ import { AiOutlineClear, AiOutlineLogout } from 'react-icons/ai';
 import ImageSelectorSetting from '../components/ImageSelectorSetting';
 import { Profile } from '../store/userSlice';
 import { ChangeEvent, useState } from 'react';
+import { getClient } from '../api/client';
+import { Keys } from '../types/user';
 
 export default function ProfileSetting() {
-  const profileString = localStorage.getItem('user-profile');
+  const profileString = localStorage.getItem(Keys.USER_PROFILE);
   const profile: Profile = profileString ? JSON.parse(profileString) : null;
   const [name, setName] = useState(profile.name || '');
-  const [email, setEmail] = useState(profile.email || '');
 
   if (!profile) {
     return <div>User not found</div>;
@@ -30,7 +31,7 @@ export default function ProfileSetting() {
         <div className='flex flex-col max-w-96 gap-8 my-4'>
           <ImageSelectorSetting profile={profile} />
           <div className='flex gap-2 items-center'>
-            <Input value={email} onChange={handleChange} disabled />
+            <Input value={profile.email} onChange={handleChange} disabled />
             <div className='text-blue-500'>
               {profile.verified ? (
                 <VscVerifiedFilled size={20} />

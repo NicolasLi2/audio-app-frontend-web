@@ -1,9 +1,10 @@
 import { Avatar } from 'antd';
 import { VscUnverified, VscVerifiedFilled } from 'react-icons/vsc';
+import { Keys } from '../types/user';
 
 export default function ProfileContainer() {
   // const { profile } = useSelector((state: RootState) => state.user);
-  const profileString = localStorage.getItem('user-profile');
+  const profileString = localStorage.getItem(Keys.USER_PROFILE);
   const profile = profileString ? JSON.parse(profileString) : null;
   console.log(profile);
   if (!profile) return null;

@@ -45,7 +45,11 @@ export default function ImageSelectorSetting({ onSelect, profile }: Props) {
 
   return (
     <div>
-      <Avatar shape='square' size={100} style={{ backgroundColor: 'white' }}>
+      <Avatar
+        shape='square'
+        size={100}
+        style={{ backgroundColor: 'white', marginRight: '15px' }}
+      >
         {!selected && (
           <img
             src={profile.avatar}
@@ -69,7 +73,7 @@ export default function ImageSelectorSetting({ onSelect, profile }: Props) {
         beforeUpload={beforeUpload}
         onChange={handleChange}
       >
-        <Button type='link'>Update your avatar</Button>
+        <Button type='default'>Update your avatar</Button>
       </Upload>
     </div>
   );

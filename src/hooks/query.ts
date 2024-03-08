@@ -4,6 +4,15 @@ import catchError from '../api/catchError';
 import { getClient } from '../api/client';
 import { AudioData, History, Playlist } from '../types/audio';
 
+export enum QueryKeys {
+  LATEST_AUDIOS = 'latest-audios',
+  RECOMMENDED = 'recommended',
+  UPLOADS_BY_PROFILE = 'uploads-by-profile',
+  PLAYLIST = 'playlist',
+  FAVORITE = 'favorite',
+  HISTORIES = 'histories',
+}
+
 const fetchLatestAudios = async (): Promise<AudioData[]> => {
   const client = await getClient();
   const { data } = await client.get('/audio/latest');
@@ -12,7 +21,8 @@ const fetchLatestAudios = async (): Promise<AudioData[]> => {
 
 export const useFetchLatestAudios = () => {
   const { data, isError, error, isLoading, isFetching } = useQuery({
-    queryKey: ['latest-audios'],
+    // queryKey: ['latest-audios'],
+    queryKey: [QueryKeys.LATEST_AUDIOS],
     queryFn: fetchLatestAudios,
   });
   if (isError) {
@@ -30,7 +40,8 @@ const fetchRecommended = async (): Promise<AudioData[]> => {
 
 export const useFetchRecommended = () => {
   const { data, isError, error, isLoading, isFetching } = useQuery({
-    queryKey: ['recommended'],
+    // queryKey: ['recommended'],
+    queryKey: [QueryKeys.RECOMMENDED],
     queryFn: fetchRecommended,
   });
   if (isError) {
@@ -48,7 +59,8 @@ const fetchUploadsByProfile = async (): Promise<AudioData[]> => {
 
 export const useFetchUploadsByProfile = () => {
   const { data, isError, error, isLoading, isFetching } = useQuery({
-    queryKey: ['uploads-by-profile'],
+    // queryKey: ['uploads-by-profile'],
+    queryKey: [QueryKeys.UPLOADS_BY_PROFILE],
     queryFn: fetchUploadsByProfile,
   });
   if (isError) {
@@ -66,7 +78,8 @@ const fetchPlaylist = async (): Promise<Playlist[]> => {
 
 export const useFetchPlaylist = () => {
   const { data, isError, error, isLoading, isFetching } = useQuery({
-    queryKey: ['playlist'],
+    // queryKey: ['playlist'],
+    queryKey: [QueryKeys.PLAYLIST],
     queryFn: fetchPlaylist,
   });
   if (isError) {
@@ -84,7 +97,8 @@ const fetchFavorite = async (): Promise<AudioData[]> => {
 
 export const useFetchFavorite = () => {
   const { data, isError, error, isLoading, isFetching } = useQuery({
-    queryKey: ['favorite'],
+    // queryKey: ['favorite'],
+    queryKey: [QueryKeys.FAVORITE],
     queryFn: fetchFavorite,
   });
   if (isError) {
@@ -102,7 +116,8 @@ const fetchHistories = async (): Promise<History[]> => {
 
 export const useFetchHistories = () => {
   const { data, isError, error, isLoading, isFetching } = useQuery({
-    queryKey: ['histories'],
+    // queryKey: ['histories'],
+    queryKey: [QueryKeys.HISTORIES],
     queryFn: fetchHistories,
   });
   if (isError) {

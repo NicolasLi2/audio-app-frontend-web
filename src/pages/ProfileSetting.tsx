@@ -11,6 +11,7 @@ import { Keys } from '../types/user';
 import { useDispatch } from 'react-redux';
 import catchError from '../api/catchError';
 import { useQueryClient } from '@tanstack/react-query';
+import { QueryKeys } from '../hooks/query';
 
 export default function ProfileSetting() {
   const profileString = localStorage.getItem(Keys.USER_PROFILE);
@@ -48,7 +49,7 @@ export default function ProfileSetting() {
     try {
       const client = await getClient();
       await client.delete('/history?all=yes');
-      queryClient.invalidateQueries({ queryKey: ['histories'] });
+      queryClient.invalidateQueries({ queryKey: [QueryKeys.HISTORIES] });
       message.success('History cleared successfully', 3);
       setIsModalOpen(false);
     } catch (error) {

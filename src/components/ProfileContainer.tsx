@@ -11,7 +11,11 @@ export default function ProfileContainer() {
   return (
     <div className='flex gap-5 items-center text-gray-700 bg-gray-50 mb-10 w-1/2'>
       <Avatar shape='square' size={100} style={{ backgroundColor: 'white' }}>
-        <img src={profile.avatar} alt={profile.name} className='rounded-md' />
+        <img
+          src={profile.avatar || '/public/default-user.png'}
+          alt={profile.name}
+          className='rounded-md'
+        />
       </Avatar>
       <div className='flex flex-col gap-1'>
         <div className='text-xl font-bold text-blue-500'>{profile.name}</div>

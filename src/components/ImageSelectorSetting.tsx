@@ -52,7 +52,7 @@ export default function ImageSelectorSetting({ onSelect, profile }: Props) {
       >
         {!selected && (
           <img
-            src={profile.avatar}
+            src={profile.avatar || '/public/default-user.png'}
             alt={profile.name}
             className='rounded-md aspect-square'
           />

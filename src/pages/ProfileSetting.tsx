@@ -1,18 +1,21 @@
-import { Avatar, Button, Input } from 'antd';
+import { Avatar, Button, Input, message } from 'antd';
 import { VscUnverified, VscVerifiedFilled } from 'react-icons/vsc';
 import { IoLogOutOutline } from 'react-icons/io5';
 import { AiOutlineClear, AiOutlineLogout } from 'react-icons/ai';
 
 import ImageSelectorSetting from '../components/ImageSelectorSetting';
-import { Profile } from '../store/userSlice';
+import { Profile, updateLoggedIn, updateProfile } from '../store/userSlice';
 import { ChangeEvent, useState } from 'react';
 import { getClient } from '../api/client';
 import { Keys } from '../types/user';
+import { useDispatch } from 'react-redux';
+import catchError from '../api/catchError';
 
 export default function ProfileSetting() {
   const profileString = localStorage.getItem(Keys.USER_PROFILE);
   const profile: Profile = profileString ? JSON.parse(profileString) : null;
-  const [name, setName] = useState(profile.name || '');
+  const [name, setName] = useState(profile?.name || '');
+  const dispatch = useDispatch();
 
   if (!profile) {
     return <div>User not found</div>;
@@ -20,6 +23,22 @@ export default function ProfileSetting() {
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setName(e.target.value);
+  };
+
+  const handleLogout = async (fromAll?: boolean) => {
+    try {
+      const endpoint = '/auth/log-out?fromAll=' + (fromAll ? 'yes' : '');
+      const client = await getClient();
+      await client.post(endpoint);
+      localStorage.removeItem(Keys.ACCESS_TOKEN);
+      localStorage.removeItem(Keys.USER_PROFILE);
+      message.success('Logged out successfully', 3);
+      // dispatch(updateProfile(null));
+      // dispatch(updateLoggedIn(false));
+    } catch (error) {
+      const errorMessage = catchError(error);
+      message.error(errorMessage, 5);
+    }
   };
 
   return (
@@ -70,6 +89,7 @@ export default function ProfileSetting() {
             type='default'
             icon={<IoLogOutOutline />}
             className='flex items-center my-7'
+            onClick={() => handleLogout()}
           >
             Log Out
           </Button>
@@ -77,6 +97,7 @@ export default function ProfileSetting() {
             type='default'
             icon={<IoLogOutOutline />}
             className='flex items-center my-7'
+            onClick={() => handleLogout(true)}
           >
             Log Out From All Devices
           </Button>

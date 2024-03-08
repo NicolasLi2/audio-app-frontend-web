@@ -19,6 +19,7 @@ const items = [
   { icon: UploadOutlined, label: 'Upload' },
   { icon: LockOutlined, label: 'Lost Password' },
   { icon: ProfileOutlined, label: 'Profile' },
+  { icon: ProfileOutlined, label: 'Setting' },
 ].map((item, index) => ({
   key: String(index + 1),
   icon: React.createElement(item.icon),
@@ -71,6 +72,9 @@ export default function LayoutUI() {
                 break;
               case '7':
                 navigate('/profile');
+                break;
+              case '8':
+                navigate('/setting');
                 break;
             }
           }}

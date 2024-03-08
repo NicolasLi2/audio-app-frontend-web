@@ -12,6 +12,7 @@ import store from './store';
 import Upload from './pages/Upload';
 import LostPassword from './pages/LostPassword';
 import Profile from './pages/Profile';
+import ProfileSetting from './pages/ProfileSetting';
 
 const router = createBrowserRouter([
   {
@@ -44,6 +45,10 @@ const router = createBrowserRouter([
       {
         path: '/profile',
         element: <Profile />,
+      },
+      {
+        path: '/setting',
+        element: <ProfileSetting />,
       },
     ],
   },

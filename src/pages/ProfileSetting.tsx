@@ -2,10 +2,12 @@ import { Avatar, Button, Input, Modal, message } from 'antd';
 import { VscUnverified, VscVerifiedFilled } from 'react-icons/vsc';
 import { IoLogOutOutline } from 'react-icons/io5';
 import { AiOutlineClear, AiOutlineLogout } from 'react-icons/ai';
-
-import ImageSelectorSetting from '../components/ImageSelectorSetting';
+import deepEqual from 'deep-equal';
+import ImageSelectorSetting, {
+  FileType,
+} from '../components/ImageSelectorSetting';
 import { Profile, updateLoggedIn, updateProfile } from '../store/userSlice';
-import { ChangeEvent, useState } from 'react';
+import { ChangeEvent, useEffect, useState } from 'react';
 import { getClient } from '../api/client';
 import { Keys } from '../types/user';
 import { useDispatch } from 'react-redux';
@@ -13,20 +15,30 @@ import catchError from '../api/catchError';
 import { useQueryClient } from '@tanstack/react-query';
 import { QueryKeys } from '../hooks/query';
 
+interface UserInfoType {
+  name: string;
+  avatar?: string | FileType;
+}
+
 export default function ProfileSetting() {
-  const profileString = localStorage.getItem(Keys.USER_PROFILE);
-  const profile: Profile = profileString ? JSON.parse(profileString) : null;
-  const [name, setName] = useState(profile?.name || '');
+  const [profile, setProfile] = useState<Profile | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isBusy, setIsBusy] = useState(false);
+  const [updateSuccess, setUpdateSuccess] = useState(false);
+  const [userInfo, setUserInfo] = useState<UserInfoType>({
+    name: '',
+    avatar: '',
+  });
   const dispatch = useDispatch();
   const queryClient = useQueryClient();
 
-  if (!profile) {
-    return <div>User not found</div>;
-  }
+  const isSame = deepEqual(userInfo, {
+    name: profile?.name,
+    avatar: profile?.avatar,
+  });
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setName(e.target.value);
+    setUserInfo({ ...userInfo, name: e.target.value });
   };
 
   const handleLogout = async (fromAll?: boolean) => {
@@ -58,6 +70,46 @@ export default function ProfileSetting() {
     }
   };
 
+  const handleUpdate = async () => {
+    setIsBusy(true);
+    try {
+      if (!userInfo.name.trim()) {
+        message.error('Name cannot be empty', 5);
+        return;
+      }
+      const formData = new FormData();
+      formData.append('name', userInfo.name);
+
+      if (userInfo.avatar) {
+        formData.append('avatar', userInfo.avatar);
+      }
+
+      const client = await getClient({ 'Content-Type': 'multipart/form-data' });
+      const { data } = await client.post('/auth/update-profile', formData);
+      localStorage.setItem(Keys.USER_PROFILE, JSON.stringify(data.profile));
+      setUpdateSuccess(true);
+      message.success('Profile updated successfully', 3);
+    } catch (error) {
+      const errorMessage = catchError(error);
+      message.error(errorMessage, 5);
+    }
+    setIsBusy(false);
+  };
+
+  useEffect(() => {
+    const profileString = localStorage.getItem(Keys.USER_PROFILE);
+    const profile: Profile = profileString ? JSON.parse(profileString) : null;
+    setProfile(profile);
+  }, [updateSuccess]);
+
+  useEffect(() => {
+    if (profile) setUserInfo({ name: profile.name, avatar: profile?.avatar });
+  }, [profile]);
+
+  if (!profile) {
+    return <div>User not found</div>;
+  }
+
   return (
     <div className='grid grid-cols-1 gap-10 md:grid-cols-2'>
       <div>
@@ -65,7 +117,11 @@ export default function ProfileSetting() {
           Profile Setting
         </div>
         <div className='flex flex-col max-w-96 gap-8 my-4'>
-          <ImageSelectorSetting profile={profile} />
+          <ImageSelectorSetting
+            profile={profile}
+            setUserInfo={setUserInfo}
+            userInfo={userInfo}
+          />
           <div className='flex gap-2 items-center'>
             <Input value={profile.email} onChange={handleChange} disabled />
             <div className='text-blue-500'>
@@ -77,10 +133,16 @@ export default function ProfileSetting() {
             </div>
           </div>
           <div>
-            <Input value={name} onChange={handleChange} />
+            <Input value={userInfo.name} onChange={handleChange} />
           </div>
           <div>
-            <Button type='default'>Save</Button>
+            <Button
+              type='default'
+              onClick={handleUpdate}
+              disabled={isSame || isBusy}
+            >
+              Update
+            </Button>
           </div>
         </div>
       </div>

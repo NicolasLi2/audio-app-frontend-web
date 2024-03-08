@@ -1,4 +1,4 @@
-import { Avatar, Button, Input, message } from 'antd';
+import { Avatar, Button, Input, Modal, message } from 'antd';
 import { VscUnverified, VscVerifiedFilled } from 'react-icons/vsc';
 import { IoLogOutOutline } from 'react-icons/io5';
 import { AiOutlineClear, AiOutlineLogout } from 'react-icons/ai';
@@ -10,12 +10,15 @@ import { getClient } from '../api/client';
 import { Keys } from '../types/user';
 import { useDispatch } from 'react-redux';
 import catchError from '../api/catchError';
+import { useQueryClient } from '@tanstack/react-query';
 
 export default function ProfileSetting() {
   const profileString = localStorage.getItem(Keys.USER_PROFILE);
   const profile: Profile = profileString ? JSON.parse(profileString) : null;
   const [name, setName] = useState(profile?.name || '');
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const dispatch = useDispatch();
+  const queryClient = useQueryClient();
 
   if (!profile) {
     return <div>User not found</div>;
@@ -35,6 +38,19 @@ export default function ProfileSetting() {
       message.success('Logged out successfully', 3);
       // dispatch(updateProfile(null));
       // dispatch(updateLoggedIn(false));
+    } catch (error) {
+      const errorMessage = catchError(error);
+      message.error(errorMessage, 5);
+    }
+  };
+
+  const handleClearHistory = async () => {
+    try {
+      const client = await getClient();
+      await client.delete('/history?all=yes');
+      queryClient.invalidateQueries({ queryKey: ['histories'] });
+      message.success('History cleared successfully', 3);
+      setIsModalOpen(false);
     } catch (error) {
       const errorMessage = catchError(error);
       message.error(errorMessage, 5);
@@ -77,9 +93,22 @@ export default function ProfileSetting() {
             type='default'
             icon={<AiOutlineClear />}
             className='flex items-center my-7'
+            onClick={() => setIsModalOpen(true)}
           >
-            Clear History
+            Clear All History
           </Button>
+          <Modal
+            title='Clear All History'
+            okText='Clear'
+            okButtonProps={{ danger: true }}
+            open={isModalOpen}
+            onOk={handleClearHistory}
+            onCancel={() => setIsModalOpen(false)}
+          >
+            <p className='font-bold'>
+              Are you sure? This action will clear out all the history!
+            </p>
+          </Modal>
         </div>
         <div>
           <div className='border-b border-blue-300 py-1 text-lg text-blue-600 font-semibold'>
